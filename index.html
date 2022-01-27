@@ -58,6 +58,9 @@
     .content {
       display: flex;
       justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 20px 20px;
     }
 
     input, select {
@@ -67,11 +70,12 @@
       outline: none;
       border-radius: 10px;
       background: #EEE;
+      margin-top: 10px;
     }
 
     .text-io {
       padding: 40px 0 40px;
-      font-size: 26px;
+      font-size: 22px;
       max-width: 1000px;
     }
 
@@ -99,14 +103,15 @@
       <input type="text" id="retirement" placeholder="Retirement age"/>
     </div>
   </header>
-  <div id="text-output" class="text-io"></div>
-  <div class="legend">
-    <strong>Legend</strong>&nbsp;&nbsp;&nbsp;
-    <i class="dot dot-gone"></i> Week lived
-    <i class="dot dot-active"></i> Week you will work
-    <i class="dot dot-retired"></i> Week you will be retired
-  </div>
   <main class="content">
+    <div id="text-output" class="text-io"></div>
+    <div class="legend">
+      <strong>Legend</strong>&nbsp;&nbsp;&nbsp;
+      <i class="dot dot-gone"></i> Week lived
+      <i class="dot dot-active"></i> Week you will work
+      <i class="dot dot-retired"></i> Week you will be retired
+    </div>
+  
     <div class="environment" id="dots"></div>
   </main>
   <script src="./data.js"></script>

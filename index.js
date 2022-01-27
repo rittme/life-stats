@@ -30,10 +30,11 @@ const render = () => {
   const retired = expectancy[gender][age] - active;
 
   const dotsGone = age * 52;
-  const dotsActive = Math.floor(active * 52);
+  const dotsActive = Math.ceil(active * 52);
   const dotsRetired = Math.ceil(retired * 52);
+  const life = Math.floor(parseFloat(age) + expectancy[gender][age]);
 
-  textOutput.innerText = `As a ${age} years old ${gender}, you lived ${dotsGone} weeks. If you retire at ${retirement} you will still have to work ${dotsActive} weeks, and will enjoy an expected ${dotsRetired} weeks retired.`;
+  textOutput.innerText = `As a ${age} years old ${gender}, you are expected to live until ${life}.\n You lived ${dotsGone} weeks. If you retire at ${retirement} you will still have to work ${dotsActive} weeks, and will enjoy an expected ${dotsRetired} weeks retired.`;
 
   for (let x = 0; x < dotsGone; x++) {
     const dot = document.createElement('i');
