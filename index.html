@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Life dots</title>
+  <style>
+    body {
+      background-color: #222;
+      font-family: Univers, "Helvetica Neue", Helvetica, Arial;
+      color: #DDD;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .environment {
+      max-width: 1000px;
+    }
+    .dot {
+      border-radius: 100%;
+      width: 11px;
+      height: 11px;
+      display: inline-block;
+      background-color: #FFF;
+      margin: 2px;
+      text-align: center;
+      
+    }
+
+    .dot-active {
+      background-color: #FFE400;
+    }
+
+    .dot-gone {
+      /*background-color: rgb(199,73,58);*/
+      background-color: rgb(199,73,58);
+      
+    }
+
+    .dot-retired {
+      /*background-color: #3500D3;*/
+      background-color: rgb(104,151,117);
+    }
+
+    .header{
+      text-align: center;
+      padding: 25px;
+    }
+
+    .header h1 {
+      font-size: 90px;
+      margin: 10px 0 40px;
+      padding: 0;
+    }
+
+    .content {
+      display: flex;
+      justify-content: center;
+    }
+
+    input, select {
+      border: none;
+      padding: 10px;
+      font-size: 18px;
+      outline: none;
+      border-radius: 10px;
+      background: #EEE;
+    }
+
+    .text-io {
+      padding: 40px 0 40px;
+      font-size: 26px;
+      max-width: 1000px;
+    }
+
+    .legend {
+      margin-bottom: 10px;
+    }
+
+    .legend .dot {
+      width: 15px;
+      height: 15px;
+      vertical-align: sub;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <h1>Life Dots</h1>
+    <div>
+      <select id="gender">
+        <option value="">Gender</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+      </select>
+      <input type="text" id="age" placeholder="Age"/>
+      <input type="text" id="retirement" placeholder="Retirement age"/>
+    </div>
+  </header>
+  <div id="text-output" class="text-io"></div>
+  <div class="legend">
+    <strong>Legend</strong>&nbsp;&nbsp;&nbsp;
+    <i class="dot dot-gone"></i> Week lived
+    <i class="dot dot-active"></i> Week you will work
+    <i class="dot dot-retired"></i> Week you will be retired
+  </div>
+  <main class="content">
+    <div class="environment" id="dots"></div>
+  </main>
+  <script src="./data.js"></script>
+  <script src="./index.js"></script>
+</body>
+</html>
