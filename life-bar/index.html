@@ -1,108 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Life dots</title>
-  <style>
-    body {
-      background-color: #5f3dc4;
-      font-family: Univers, "Helvetica Neue", Helvetica, Arial;
-      color: #EEE;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-    
-    .header{
-      text-align: center;
-      padding: 25px;
-      z-index: 2;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Life bar</title>
+    <style>
+      body {
+        background-color: #5f3dc4;
+        font-family: Univers, 'Helvetica Neue', Helvetica, Arial;
+        color: #eee;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
 
-    .header h1 {
-      font-size: 90px;
-      margin: 10px 0 40px;
-      padding: 0;
-      text-shadow: 1px 2px 0px rgba(0,0,0,0.1);
-    }
+      .header {
+        text-align: center;
+        padding: 25px;
+        z-index: 2;
+      }
 
-    .content {
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      align-items: center;
-      padding: 0 20px 20px;
-    }
+      .header h1 {
+        font-size: 90px;
+        margin: 10px 0 40px;
+        padding: 0;
+        text-shadow: 1px 2px 0px rgba(0, 0, 0, 0.1);
+      }
 
-    input, select {
-      border: none;
-      padding: 10px;
-      font-size: 70px;
-      outline: none;
-      background: transparent;
-      width: 2em;
-      color: #eee;
-      text-shadow: 1px 2px 0px rgba(0,0,0,0.1);
-    }
+      .content {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        padding: 0 20px 20px;
+      }
 
-    .text-io {
-      padding: 20px 0 40px;
-      font-size: 50px;
-      z-index: 4;
-      position: absolute;
-      bottom: 0;
-      text-shadow: 1px 2px 0px rgba(0,0,0,0.1);
-    }
+      input,
+      select {
+        border: none;
+        padding: 10px;
+        font-size: 70px;
+        outline: none;
+        background: transparent;
+        width: 2em;
+        color: #eee;
+        text-shadow: 1px 2px 0px rgba(0, 0, 0, 0.1);
+      }
 
-    .left {
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      display: block;
-      height: 0vh;
-      background-color: #fcc419;
-    }
+      .text-io {
+        padding: 20px 0 40px;
+        font-size: 50px;
+        z-index: 4;
+        position: absolute;
+        bottom: 0;
+        text-shadow: 1px 2px 0px rgba(0, 0, 0, 0.1);
+      }
 
-    .form {
-      justify-content: center;
-      display: flex;
-    }
+      .left {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        display: block;
+        height: 0vh;
+        background-color: #fcc419;
+      }
 
-    .gender {
-      font-size: 90px;
-      cursor: pointer;
-    }
+      .form {
+        justify-content: center;
+        display: flex;
+      }
 
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
+      .gender {
+        font-size: 90px;
+        cursor: pointer;
+      }
 
-    /* Firefox */
-    input[type=number] {
-      -moz-appearance: textfield;
-    }
-  </style>
-</head>
-<body>
-  <header class="header">
-    <h1>Life is Short</h1>
-    <div class="form">
-      <div class="gender" id="gender">
-        👨🏻
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      /* Firefox */
+      input[type='number'] {
+        -moz-appearance: textfield;
+      }
+
+      .gender-tooltip {
+        background-color: #ddd;
+        color: #333;
+        padding: 5px;
+        border-radius: 4px;
+        position: relative;
+      }
+      .gender-tooltip:after {
+        content: '';
+        position: absolute;
+        top: -8px;
+        left: calc(50% - 8px);
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 0 8px 8px 8px;
+        border-color: transparent transparent #dddddd transparent;
+      }
+      .gender-tooltip-box {
+        position: relative;
+        height: 0;
+        transition: 0.2s ease-out opacity;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <h1>Life is Short</h1>
+      <div class="form">
+        <div>
+          <div class="gender" id="gender">🧔🏻‍♂️</div>
+          <div class="gender-tooltip-box" id="gender-tooltip">
+            <div class="gender-tooltip">Gender</div>
+            
+          </div>
+        </div>
+
+        <input type="text" id="age" placeholder="Age" />
       </div>
-      <input type="number" id="age" placeholder="Age" max="120" />
-    </div>
-  </header>
-  <main class="content">
-    <div id="text-output" class="text-io"></div>
-    <div class="left" id="time-left"></div>
-  </main>
-  <script src="../data.js"></script>
-  <script src="./index.js"></script>
-</body>
+    </header>
+    <main class="content">
+      <div id="text-output" class="text-io"></div>
+      <div class="left" id="time-left"></div>
+    </main>
+    <script src="../data.js"></script>
+    <script src="./index.js"></script>
+  </body>
 </html>

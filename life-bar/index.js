@@ -2,8 +2,35 @@ const genderSelect = document.getElementById('gender');
 const ageInput = document.getElementById('age');
 const textOutput = document.getElementById('text-output');
 const timeLeft = document.getElementById('time-left');
-
+const genderTooltip = document.getElementById('gender-tooltip');
 ageInput.value = '';
+
+const emoji = {
+  male: ['👶🏻', '👦🏻', '🧑🏻', '🧔🏻‍♂️', '👨🏻', '👴🏻', '👻'],
+  female: ['👶🏻', '👧🏻', '👩🏻', '👩🏻', '👩🏻', '👵🏻', '👻'],
+};
+
+function getEmoji(gender, age) {
+  if (age === undefined) {
+    return emoji[gender][3];
+  }
+  let index = 0;
+  if (age >= expectancy[gender].length) {
+    index = 6;
+  } else if (age >= 60) {
+    index = 5;
+  } else if (age >= 40) {
+    index = 4;
+  } else if (age >= 20) {
+    index = 3;
+  } else if (age >= 12) {
+    index = 2;
+  } else if (age >= 5) {
+    index = 1;
+  }
+
+  return emoji[gender][index];
+}
 
 const debounce = ((fn, timeout = 250) => {
   let to = null;
@@ -17,58 +44,57 @@ let gender = 'male';
 let age;
 
 const render = () => {
+  genderSelect.innerHTML = getEmoji(gender, age);
+  console.log(age);
   if (!gender || age === undefined) {
     textOutput.innerText = '';
     timeLeft.style.height = `${0}vh`;
     return;
   }
 
-  const left = expectancy[gender][age];
-  // left + age - 100
-  // left - x
-  // x = left + 100 / (left + age)
-  console.log(`${age}`);
-  console.log(`${left}`);
-  console.log(`${left} * 100`);
-  console.log(`${left * 100} `);
-  console.log(`${left + age}`);
+  if (age >= expectancy[gender].length) {
+    textOutput.innerText = 'Sorry...';
+    timeLeft.style.height = `0vh`;
+    return;
+  }
 
+  const left = expectancy[gender][age];
   const height = (left * 100) / (left + age);
   timeLeft.style.height = `${height}vh`;
-  console.log(height);
-  // expectancy[gender][age] - 100
-  // left - x
-
-  // const dotsGone = age * 52;
-  // const time = Math.ceil(left * 52);
-  // const life = Math.floor(parseFloat(age) + expectancy[gender][age]);
-
-  // textOutput.innerText = `As a ${age} years old ${gender}, you are expected to live until ${life}.\n You lived ${dotsGone} weeks. If you retire at ${retirement} you will still have to work ${dotsActive} weeks, and will enjoy an expected ${dotsRetired} weeks retired.`;
   textOutput.innerText = `Around ${Math.round(left)} years left`;
 };
 
+function removeGenderTooltip() {
+  genderTooltip.style.opacity = 0;
+  setTimeout(() => genderTooltip.remove(), 200);
+}
+
 genderSelect.addEventListener('click', () => {
-  console.log('ok');
   if (gender === 'male') {
     gender = 'female';
-    genderSelect.innerHTML = '👩🏻';
   } else {
     gender = 'male';
-    genderSelect.innerHTML = '👨🏻';
   }
+  removeGenderTooltip();
   render();
 });
 
 ageInput.addEventListener('input', ({ target }) => {
-  target.value = target.value.replace(/([^0-9.])/g, '');
-  let numAge = Number(target.value);
-  if (numAge >= expectancy[gender].length) {
-    numAge = expectancy[gender].length - 1;
-    target.value = numAge;
-  }
-  debounce(() => {
-    age = Number(numAge);
+  if (!target.value) {
+    age = undefined;
     render();
+    return;
+  }
+  target.value = target.value.replace(/[^0-9]/g, '');
+  let numAge = Number(target.value);
+  // if (numAge >= expectancy[gender].length) {
+  //   numAge = expectancy[gender].length - 1;
+  //   target.value = numAge;
+  // }
+  age = Number(numAge);
+  debounce(() => {
+    render();
+    removeGenderTooltip();
   })();
 });
 
