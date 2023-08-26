@@ -1,2 +1,3 @@
-# Life dots
-Simple web app to show your life as dots per week.
+# Life stats
+
+Collection of depressing tiny apps to show us how life is short.
